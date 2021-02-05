@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Saisie ID client</title>
+    
+    <!--importation AJAX-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+  </head>
+
+  <body>
+       <h1>
+            Saisir l'ID client
+       </h1>
+       
+       <form id="id_client" action="/api/dashboard/" method="post" onsubmit="return validateForm();" >
+  		<label for="client_id">ID client: </label>
+  		<input type="text" name="client_id" id="client_id"><br>
+  		<input type="submit" value="Submit">
+	</form>
+	<p style="color: red;" id="erreur"></p>
+  <script src="/static/formulaire_saisie.js"></script>
+  </body>
+</html>

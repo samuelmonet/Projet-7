@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard client</title>
+    
+    <!--importation des librairies NVD3 et Hoghcharts-->
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="/static/p7_dashboard.js"></script>
+
+    <!--Lecture fichier CSS-->
+    <link rel="stylesheet" type="text/css" href="/static/dashboard.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.css">
+
+  </head>
+
+  <body>
+
+   <div class="content">
+      <header>
+        <div class="header-background"></div>
+        <div class="title">
+          <h1>
+            Id Client: <span id="client_id"> </span>
+          </h1>
+        </div>
+      </header>
+      
+      <main>
+
+          <span id="general">
+            <hr>
+            <h2>Score:</h4>
+            <hr>
+            <h5> <span id="score"> </span> </h5>
+            <hr>
+            <h2>Détails crédits:</h2>
+            <hr>
+            <h4>Crédit:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span id="credit" > </span> </h4>
+            <h4>Prix du bien : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span id="prix"> </span></h4>
+            <h4> Annuité: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span id="annuite"></span> </h4>
+            <hr>
+            <h2>Détails Client</h2>
+            <hr>
+            <h4>Sexe &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span id="sexe"> </span></h4>
+            <h4>Age &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span id="age"></span> years old</h4> 
+            <h4>Ancienneté Professionnelle: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span id="taf"> </span> year(s) </h4>  
+            <h4>Education: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span id="education"> </span></h4>
+            <h4>Number of Children :  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span id="children"> </span></h4>
+            <h4>Family Size : &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span id="family"></h4>
+            <h4>Car &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span id="voiture"> </span></h4>
+            <hr>
+            <h2>Détails autres prêts</h2>
+            <hr>
+            <h4>Crédits en cours  &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span id="bb"></span></h4>
+            <h4>Retard de paiement:		 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Jusqu'à <span id="inst"> </span> jour(s)</h4>
+            <h4>% limite cartes de crédit:		&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span id="card"> </span></h4>
+            
+          </span>
+         
+
+          <span id="graphs">
+          <h2>Informations Extérieures</h2>
+            <p class="highcharts-description">
+        	Graphiques présentant les données des sources extérieures. La barre bleue représente la position du client parmi l'ensemble des valeurs de la base de données. </p>
+             
+            <span class="ext">
+              <h3>Source 1 : <span id="ext1"> </span></h3>
+              <div id="chart1">
+                <svg></svg>
+              </div>
+
+            </span>
+            <span class="ext">
+              <h3>Source 2 : <span id="ext2"> </span></h3>
+              <div id="chart2">
+                <svg></svg>
+              </div>
+            </span>
+            <span class="ext">
+              <h3>Source 3 : <span id="ext3"> </span></h3>
+              <div id="chart3">
+                <svg></svg>
+              </div>
+            </span>
+            
+    		<h2>Informations demande de prêt</h2>
+    		<p class="highcharts-description">
+            Graphiques présentant les valeurs du clients comparées aux moyennes des 50 autres clients les plus proches.</p>
+            <p class="highcharts-description">
+        	La proximité est évaluée à partir des variables: enfants, éducation, profession, sexe et sources de revenus.</p>
+            <span class="pret">
+               <figure class="highcharts-figure">
+    		<div id="container"></div>
+				</figure>
+              
+            </span>
+            <span class="pret">
+              <figure class="highcharts-figure">
+    		<div id="container2"></div>
+		</figure>              
+    		
+             
+            </span>
+          </span>
+                 
+      </main>
+    </div>
+
+    
+
+
+  </body>
+</html>
